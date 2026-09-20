@@ -52,6 +52,7 @@
 | Date | Lesson | Quiz | Note |
 |------|--------|------|------|
 | 2026-09-20 | 00/01-dev-environment | 2/3 | WSL 入门预检 2/2，Node/cargo/Julia/PyTorch 均为 PASS；加速器 CPU only。课末曾把 `torch.__version__` 当成 GPU 检查。 |
+| 2026-09-20 | 00/02-git-and-collaboration | 3/3 | origin=fork wdf13，upstream=官方；分支 my-progress 已 SSH push。 |
 
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）
