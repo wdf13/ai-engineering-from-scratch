@@ -1,0 +1,13 @@
+[project]
+name = "iso-demo"
+version = "0.1.0"
+requires-python = ">= 3.11"
+dependencies = [
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+torch = ["torch>=2.3", "torchvision>=0.18"]
+llm = ["openai>=1.50"]
+
+

@@ -1,0 +1,41 @@
+{
+  "lesson": "02-git-and-collaboration",
+  "title": "Git 与协作",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "版本控制主要帮你做什么？",
+      "options": ["自动修复代码里的 bug", "让代码跑得更快", "跟踪文件随时间的改动，并和别人协作", "压缩文件以节省磁盘"],
+      "correct": 2,
+      "explanation": "git 这类版本控制会记下每次改动，你可以回到以前的状态，也可以和别人改同一份代码。"
+    },
+    {
+      "stage": "pre",
+      "question": "软件开发里的「仓库」（repository）是什么？",
+      "options": ["用来装库的包管理器", "由版本控制管理的、包含文件及其完整改动历史的集合", "存用户数据的数据库", "像网盘那样的云存储"],
+      "correct": 1,
+      "explanation": "仓库（repo）是被 git 跟踪的目录，里面有项目文件以及这些文件的全部改动历史。"
+    },
+    {
+      "stage": "post",
+      "question": "用 git 保存并备份到 GitHub，正确顺序是？",
+      "options": ["git push，再 git add，再 git commit", "git clone，再 git add，再 git push", "git add，再 git commit，再 git push", "git commit，再 git add，再 git push"],
+      "correct": 2,
+      "explanation": "先 git add 放进暂存区，再 git commit 拍快照，再 git push 传到远端。这是日常流程。"
+    },
+    {
+      "stage": "post",
+      "question": "git checkout -b experiment/new-optimizer 会做什么？",
+      "options": ["新建分支 experiment/new-optimizer 并切换过去", "删除分支 experiment/new-optimizer", "从 GitHub 下载名为 experiment/new-optimizer 的分支", "把所有文件恢复成 experiment/new-optimizer 上的样子"],
+      "correct": 0,
+      "explanation": "-b 会按给定名字建新分支并立刻切过去，这样实验不会弄坏 main。"
+    },
+    {
+      "stage": "post",
+      "question": "为什么要把 .pt、.pth、.safetensors 写进 .gitignore？",
+      "options": ["它们是模型权重，往往很大，可以重新生成或另存，不适合进 git", "git 完全不能跟踪任何二进制文件", "它们是 Python 测试文件，不应提交", "里面含有 API 密钥"],
+      "correct": 0,
+      "explanation": "检查点文件经常有好几 GB。git 不是为超大二进制设计的，应排除后另行存储或重新生成。"
+    }
+  ]
+}

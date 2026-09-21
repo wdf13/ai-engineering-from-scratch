@@ -1,0 +1,41 @@
+{
+  "lesson": "05-jupyter-notebooks",
+  "title": "Jupyter Notebooks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Jupyter notebook 是什么？",
+      "options": ["把可运行代码格、Markdown 文字和内嵌输出混在一起的交互文档", "Python 库的包管理器", "数据科学项目的版本控制系统", "写 Python 脚本的文本编辑器"],
+      "correct": 0,
+      "explanation": ".ipynb 是交互环境：按格子写、跑代码，结果显示在格子下面，并可夹杂排版过的说明文字。"
+    },
+    {
+      "stage": "pre",
+      "question": "Jupyter 的内核（kernel）做什么？",
+      "options": ["执行格子里的代码，并在各次运行之间把变量留在内存里", "把 notebook 连到 GitHub 做版本控制", "管理 notebook 的文件存储", "把 Markdown 格排成 HTML"],
+      "correct": 0,
+      "explanation": "内核是单独的 Python 进程，执行格子代码并在内存里保持状态（变量、import）。一份 notebook 里所有格子共用同一个内核。"
+    },
+    {
+      "stage": "post",
+      "question": "%timeit 和 %%time 这两个 magic 有什么区别？",
+      "options": ["没有区别，只是别名", "%timeit 会跑很多次再取平均，%%time 只跑一次", "%timeit 测墙钟时间，%%time 测 CPU 时间", "%timeit 只管一行，%%time 管整本 notebook"],
+      "correct": 1,
+      "explanation": "%timeit 多次运行再统计平均（适合微基准）。%%time 把这一格只跑一次并报告墙钟时间（适合训练）。"
+    },
+    {
+      "stage": "post",
+      "question": "notebook 在你机器上能跑、别人从上到下跑却失败，最常见的原因是？",
+      "options": ["少写了 %matplotlib inline", "Markdown 格子太多", "格子乱序执行，产生了对执行顺序的隐藏依赖", "Python 版本不同"],
+      "correct": 2,
+      "explanation": "乱序点格子会造成隐藏状态：变量可能来自你先跑了第 5 格再跑第 2 格。Kernel > Restart & Run All 用来验证线性执行。"
+    },
+    {
+      "stage": "post",
+      "question": "什么时候该把 notebook 里的代码搬进 .py 脚本？",
+      "options": ["永远不需要，AI 工作用 notebook 总是更好", "只有要在 GPU 上跑时才搬", "代码超过 10 行就搬", "代码已是可复用工具、训练流水线或生产代码时"],
+      "correct": 3,
+      "explanation": "规则是「explore in notebooks, ship in scripts」。可复用工具、训练流水线、生产里跑的东西应是 .py。Notebook 用于探索和原型。"
+    }
+  ]
+}

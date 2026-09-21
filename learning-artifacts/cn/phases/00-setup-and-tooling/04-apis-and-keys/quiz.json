@@ -1,0 +1,41 @@
+{
+  "lesson": "04-apis-and-keys",
+  "title": "API 与密钥",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "调用 LLM 服务时，API 密钥用来做什么？",
+      "options": ["加密发到服务器的数据", "证明你的身份并授权这次请求", "压缩请求以节省带宽", "选择服务器用哪种编程语言"],
+      "correct": 1,
+      "explanation": "API 密钥是标识账户、授权请求的一串字符，提供方用它记账和计费。"
+    },
+    {
+      "stage": "pre",
+      "question": "为什么不要把 API 密钥直接写进源代码？",
+      "options": ["Python 读不了超过 50 个字符的字符串", "提供方会封锁出现在源码里的密钥", "写死密钥会让代码变慢", "可能被 git commit 后公开泄露"],
+      "correct": 3,
+      "explanation": "写死在源码里容易被提交、推到公开仓库，被人刮走滥用。"
+    },
+    {
+      "stage": "post",
+      "question": "本地开发时，API 密钥推荐怎么存放？",
+      "options": ["放在已加入 .gitignore 的 .env 文件里", "写在 README.md 里方便查找", "写在脚本开头的 Python 变量里", "和包版本一起写进 requirements.txt"],
+      "correct": 0,
+      "explanation": ".env 以环境变量形式存密钥，必须进 .gitignore，不能进版本库。SDK 会从环境变量读取。"
+    },
+    {
+      "stage": "post",
+      "question": "课文里 Anthropic 的裸 HTTP 调用，API 密钥放在哪个请求头里？",
+      "options": ["Authorization: Bearer sk-ant-...", "Content-Type: application/json", "anthropic-version: 2023-06-01", "x-api-key: sk-ant-..."],
+      "correct": 3,
+      "explanation": "Anthropic 用 x-api-key 头做鉴权，不是更常见的 Authorization: Bearer。这是他们的 API 设计。"
+    },
+    {
+      "stage": "post",
+      "question": "超过 API 的速率限制时会发生什么？",
+      "options": ["请求会自动排队，稍后一定会被处理", "服务器返回错误（通常是 HTTP 429），需要等待后再重试", "API 密钥会被永久吊销", "API 悄悄丢掉请求，没有任何响应"],
+      "correct": 1,
+      "explanation": "限流返回 HTTP 429。需要等待再重试，通常配合指数退避。限流是为了防止滥用、保证公平。"
+    }
+  ]
+}

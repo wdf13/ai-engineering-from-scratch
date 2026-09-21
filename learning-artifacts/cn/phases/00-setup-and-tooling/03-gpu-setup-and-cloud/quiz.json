@@ -1,0 +1,41 @@
+{
+  "lesson": "03-gpu-setup-and-cloud",
+  "title": "GPU 配置与云",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "训练神经网络时，GPU 比 CPU 快的主要原因是什么？",
+      "options": ["GPU 的主频比 CPU 高", "GPU 能同时做成千上万次矩阵运算", "GPU 用了一种更高效的编程语言", "GPU 的内存一定比 CPU 多"],
+      "correct": 1,
+      "explanation": "GPU 有成千上万个为并行计算优化的核，适合神经网络训练里占主导的矩阵乘。"
+    },
+    {
+      "stage": "pre",
+      "question": "VRAM 指的是什么？",
+      "options": ["所有设备上的内存总和", "一种 CPU 缓存", "GPU 上的显存，和系统内存分开", "操作系统拿来做交换分区的虚拟内存"],
+      "correct": 2,
+      "explanation": "VRAM 是 GPU 上的专用显存，限制模型和 batch 能有多大，和主内存不是一块。"
+    },
+    {
+      "stage": "post",
+      "question": "哪条命令用来确认 NVIDIA GPU 被系统认出，并显示当前状态？",
+      "options": ["torch.cuda.list_devices()", "nvidia-smi", "lspci | grep gpu", "gpu --status"],
+      "correct": 1,
+      "explanation": "nvidia-smi 显示利用率、显存、温度和进程，是确认 GPU 是否可用的标准工具。"
+    },
+    {
+      "stage": "post",
+      "question": "对比 GPU 和 CPU 矩阵乘的耗时，为什么计时前要调用 torch.cuda.synchronize()？",
+      "options": ["把数据从 CPU 内存拷到 GPU 显存", "等 GPU 上的运算都做完，再停表，时间才准", "释放没用到的显存", "把 GPU 频率重置到基础频率"],
+      "correct": 1,
+      "explanation": "GPU 运算是异步的：Python 会马上返回，卡上可能还在算。synchronize() 会等到全部做完，计时才准。"
+    },
+    {
+      "stage": "post",
+      "question": "按 fp16「每参数 2 字节」估算，24 GB 显存大约能放下多少参数？",
+      "options": ["60 亿", "240 亿", "120 亿", "480 亿"],
+      "correct": 2,
+      "explanation": "fp16 每参数 2 字节。24 GB / 2 字节 = 120 亿参数。这是粗算，实际还要算激活、梯度和优化器状态。"
+    }
+  ]
+}
