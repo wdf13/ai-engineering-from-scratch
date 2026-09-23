@@ -44,6 +44,7 @@
 | 2026-09-21 | 00/04-apis-and-keys | 3/3 | DeepSeek-flash：SDK 与裸 HTTP 均通；401 后改密钥。Anthropic 头仍用 x-api-key。 |
 | 2026-09-21 | 00/05-jupyter-notebooks | 3/3 | WSL 内核 .venv；%timeit 练习 + Restart & Run All 全绿。 |
 | 2026-09-21 | 00/06-python-environments | 3/3 | env_setup 复用 .venv 全过；iso-demo 三套 numpy 隔离；pyproject 含 torch/llm 可选组。练习 4：系统 Python 触发 PEP 668，未 --break-system-packages。 |
+| 2026-09-23 | 00/07-docker-for-ai | 3/3 | WSL hello-world 通过。未构建 ai-dev 大镜像；gpu3 上 Toolkit 已装，wzh 不在 docker 组。 |
 
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）

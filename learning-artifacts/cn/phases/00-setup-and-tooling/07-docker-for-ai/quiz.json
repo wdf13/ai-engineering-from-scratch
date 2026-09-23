@@ -1,0 +1,66 @@
+{
+  "lesson": "07-docker-for-ai",
+  "title": "Docker 与 AI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Docker 容器和虚拟机的主要差别是什么？",
+      "options": [
+        "实际使用上没有差别",
+        "容器更慢但更安全",
+        "容器共享宿主机内核，虚拟机跑完整的客户操作系统",
+        "容器只能跑 Linux，虚拟机可以任意 OS"
+      ],
+      "correct": 2,
+      "explanation": "容器共享宿主机内核，在进程级隔离，几秒就能起。虚拟机跑完整客户 OS 和自己的内核，更重、启动更慢。"
+    },
+    {
+      "stage": "pre",
+      "question": "Dockerfile 是什么？",
+      "options": [
+        "Docker 守护进程的配置文件",
+        "一层层构建 Docker 镜像的说明书",
+        "列出正在运行的容器的文件",
+        "记录容器活动的日志"
+      ],
+      "correct": 1,
+      "explanation": "Dockerfile 是一组顺序指令（FROM、RUN、COPY 等），Docker 按它构建镜像。每条指令生成一层可缓存的 layer。"
+    },
+    {
+      "stage": "post",
+      "question": "AI 开发用 Docker 时，为什么 volume 挂载特别关键？",
+      "options": [
+        "volume 让多个容器共享同一块 GPU",
+        "volume 用宿主机磁盘让容器跑得更快",
+        "Python 包装对必须靠 volume",
+        "volume 让模型、数据集、代码在容器重建后还在，不必每次重下好几 GB"
+      ],
+      "correct": 3,
+      "explanation": "容器一停，里面的东西默认就没了。volume 把宿主机目录映射进去，14GB+ 的权重和数据集才能活过重建。"
+    },
+    {
+      "stage": "post",
+      "question": "NVIDIA Container Toolkit 让你能做什么？",
+      "options": [
+        "在容器里安装 CUDA 驱动",
+        "在 AMD 硬件上跑 NVIDIA GPU 容器",
+        "通过 --gpus 把宿主机 GPU 暴露给 Docker 容器",
+        "在 Docker 构建过程中编译 CUDA 代码"
+      ],
+      "correct": 2,
+      "explanation": "NVIDIA Container Toolkit 是运行时钩子，把宿主机 GPU 暴露给容器。CUDA toolkit 在容器里，GPU 驱动从宿主机共享。"
+    },
+    {
+      "stage": "post",
+      "question": "Docker Compose 里，ai-dev 服务怎样访问名为 qdrant 的向量库？",
+      "options": [
+        "两个容器挂同一个 volume",
+        "用服务名 qdrant 当主机名，因为 Compose 会建共享网络",
+        "在容器之间配 VPN",
+        "用宿主机 IP 和端口"
+      ],
+      "correct": 1,
+      "explanation": "Compose 自动建共享网络，服务之间用名字互访。ai-dev 用 http://qdrant:6333，服务名就是主机名。"
+    }
+  ]
+}
