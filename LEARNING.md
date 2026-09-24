@@ -47,6 +47,8 @@
 | 2026-09-23 | 00/07-docker-for-ai | 3/3 | WSL hello-world 通过。未构建 ai-dev 大镜像；gpu3 上 Toolkit 已装，wzh 不在 docker 组。 |
 | 2026-09-23 | 00/08-editor-setup | 3/3 | WSL 里已有标尺、Black、终端拆分；Remote SSH 用已有 gpu3 别名。 |
 | 2026-09-23 | 00/09-data-management | 3/3 | IMDB 25000/25000；wiki 流式 5 条（配置改为 20231101.en）；CSV 1.3M vs Parquet 804K；划分 17500/2500/5000。 |
+| 2026-09-24 | 00/10-terminal-and-shell | 3/3 | 掌握管道与重定向 (2>&1, dup2)、awk 列切分；搞透 SIGHUP 与 tmux 守护；SSH -L 端口转发与 find/xargs 机制全通。 |
+
 
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）

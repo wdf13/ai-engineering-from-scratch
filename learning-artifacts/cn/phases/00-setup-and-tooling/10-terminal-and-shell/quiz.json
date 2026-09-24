@@ -1,0 +1,66 @@
+{
+  "lesson": "10-terminal-and-shell",
+  "title": "终端与 Shell",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Shell 命令行中的管道操作符 '|' 究竟做了什么？",
+      "options": [
+        "并行启动两个命令",
+        "将两个文件的内容合并为一个新文件",
+        "将前一个命令的标准输出（stdout）作为后一个命令的标准输入（stdin）",
+        "将前一个命令的输出重定向保存到磁盘文件中"
+      ],
+      "correct": 2,
+      "explanation": "管道操作符 '|' 用于在进程间建立连接通道。例如 'cat log.txt | grep error' 会把 log.txt 的内容作为 grep 的输入流，由 grep 负责从中过滤出包含 'error' 的行。"
+    },
+    {
+      "stage": "pre",
+      "question": "当你直接关闭启动了正在运行任务的终端窗口时，底层的运行进程会发生什么？",
+      "options": [
+        "进程会暂停挂起，直到你再次打开新终端",
+        "进程会自动脱钩并无缝继续在系统后台运行",
+        "进程会收到内核发送的挂断信号（SIGHUP），默认行为是被终止杀死",
+        "进程会自动被操作系统提升迁移为系统级 systemd 服务"
+      ],
+      "correct": 2,
+      "explanation": "关闭终端会触发内核向控制终端拥有的所有子进程广播 SIGHUP（挂断信号），该信号的默认处理动作是杀死进程。使用 tmux、screen 或 nohup 可以避免因断开终端而导致进程死亡。"
+    },
+    {
+      "stage": "post",
+      "question": "在长期运行的大模型训练任务中，使用 tmux 相比使用 'nohup command &' 的最大核心优势是什么？",
+      "options": [
+        "tmux 在进程挂掉时能自动重启训练",
+        "tmux 消耗的 CPU 开销比 nohup 少得多",
+        "tmux 允许你随时脱离（detach）、重新连接（reattach），并且能通过多窗格实时查看与交互实时输出",
+        "tmux 会自动压缩进程输出以显著节省磁盘空间"
+      ],
+      "correct": 2,
+      "explanation": "tmux 建立的是独立的伪终端会话守护进程，不仅脱离后任务持续运行，重新连接后还能保留完整的交互终端、多窗格布局（分屏看训练与显存），远比 nohup 仅落盘日志无法交互要强大得多。"
+    },
+    {
+      "stage": "post",
+      "question": "在 Linux 终端执行 'python train.py > output.log 2>&1' 能够实现什么效果？",
+      "options": [
+        "运行 train.py，但只把错误信息保存进 output.log",
+        "运行 train.py 并为其分配双倍显存/内存",
+        "按顺序运行 train.py 两次，且只记录第二次运行的日志",
+        "运行 train.py，并将标准输出（stdout）与标准错误（stderr）全部合并保存到 output.log"
+      ],
+      "correct": 3,
+      "explanation": "'> output.log' 将标准输出（描述符 1）定向到 output.log；'2>&1' 将标准错误（描述符 2）复制合并到标准输出当前所指向的目标。因此不管是正常 print 还是报错崩溃堆栈，都会被完整写入 output.log。"
+    },
+    {
+      "stage": "post",
+      "question": "哪条命令可以让你在本地机器的浏览器中直接访问运行在远程 GPU 服务器 8888 端口上的 Jupyter Notebook？",
+      "options": [
+        "ssh -L 8888:localhost:8888 user@gpu-box",
+        "ssh user@gpu-box --forward-port 8888",
+        "scp -P 8888 user@gpu-box:~/notebook.ipynb",
+        "rsync -avz user@gpu-box:8888 localhost:8888"
+      ],
+      "correct": 0,
+      "explanation": "SSH 本地端口转发（-L [本地端口]:[远端目标主机]:[远端目标端口]）建立了一条加密隧道，把本地的 8888 端口流量转发至远程服务器的 8888 端口。执行后本地打开 http://localhost:8888 即可访问远端服务。"
+    }
+  ]
+}
