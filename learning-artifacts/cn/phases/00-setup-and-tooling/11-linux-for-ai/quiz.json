@@ -1,0 +1,66 @@
+{
+  "lesson": "11-linux-for-ai",
+  "title": "Linux for AI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "在 Linux 文件路径中，'~'（波浪号）代表什么？",
+      "options": [
+        "整个文件系统的根目录（/）",
+        "存放临时文件的系统临时目录（/tmp）",
+        "当前登录用户的主目录（通常为 /home/用户名）",
+        "存放系统可执行程序的全局安装目录（/usr/bin）"
+      ],
+      "correct": 2,
+      "explanation": "波浪号（~）是当前登录用户主目录（Home Directory）的环境变量简写，在 Linux 下通常对应 /home/username。执行 'cd ~' 可以从任何地方瞬间回到用户主目录。"
+    },
+    {
+      "stage": "pre",
+      "question": "在执行系统管理命令前加上 'sudo' 的核心目的是什么？",
+      "options": [
+        "以 root（超级管理员）权限临时提升运行该条命令",
+        "在一个完全沙盒隔离的虚拟环境中运行该命令",
+        "为该命令分配最高优先级并加速其执行",
+        "将该命令的执行日志重定向记录到系统安全审计文件中"
+      ],
+      "correct": 0,
+      "explanation": "sudo（superuser do）允许经授权的普通用户以系统 root 超级管理员身份临时执行特定命令，用于执行系统级包管理（如 apt install）、修改系统全局配置等敏感操作。"
+    },
+    {
+      "stage": "post",
+      "question": "当你尝试直接执行一个 Shell 脚本（如 ./train.sh）时收到 'Permission denied' 报错，使用哪条命令能够快速解决？",
+      "options": [
+        "chown root train.sh",
+        "mv train.sh /usr/bin/",
+        "chmod +x train.sh",
+        "sudo rm train.sh"
+      ],
+      "correct": 2,
+      "explanation": "chmod +x 为该文件添加了可执行权限标志位（Execute bit）。在 Linux 中，哪怕你是该文件的所有者，如果未赋予可执行位，Shell 内核也会拒绝执行该脚本。"
+    },
+    {
+      "stage": "post",
+      "question": "在远程 GPU 服务器上，训练数据填满了磁盘分区，哪条命令能快速找出根目录下占用空间最大的第一级子目录？",
+      "options": [
+        "ls -la /",
+        "cat /proc/meminfo",
+        "du -h --max-depth=1 / 2>/dev/null | sort -hr | head -20",
+        "free -h"
+      ],
+      "correct": 2,
+      "explanation": "du -h 统计目录磁盘块占用，--max-depth=1 将扫描深度限制在第一级子目录，sort -hr 按照人类可读大小做逆序排序，head -20 取出前 20 大的空间占用大户，是排查磁盘爆满的工业标准组合。"
+    },
+    {
+      "stage": "post",
+      "question": "在脚本跨平台迁移时，macOS（BSD 工具链）与 Linux（GNU 工具链）下的 'sed -i' 命令存在什么常见关键差异？",
+      "options": [
+        "Linux 下的 sed 执行速度显著快于 macOS 下的 sed",
+        "Linux 下的 sed 原生不支持正则表达式匹配",
+        "macOS 下的 sed 根本无法在原文件上做就地（in-place）修改",
+        "macOS 下的 sed 要求在 -i 后必须紧跟一个空字符串参数表示不备份（'sed -i \"\"'），而 Linux 不需要空字符串"
+      ],
+      "correct": 3,
+      "explanation": "macOS 基于 BSD sed，就地修改必须显式提供备份文件后缀，若不备份必须传入空字符串 'sed -i \"\" pattern file'；而 Linux 基于 GNU sed，可以直接执行 'sed -i pattern file'。在 Linux 上多传一个空字符串会被误认作文件名并报错。"
+    }
+  ]
+}

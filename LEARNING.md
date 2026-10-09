@@ -48,6 +48,8 @@
 | 2026-09-23 | 00/08-editor-setup | 3/3 | WSL 里已有标尺、Black、终端拆分；Remote SSH 用已有 gpu3 别名。 |
 | 2026-09-23 | 00/09-data-management | 3/3 | IMDB 25000/25000；wiki 流式 5 条（配置改为 20231101.en）；CSV 1.3M vs Parquet 804K；划分 17500/2500/5000。 |
 | 2026-09-24 | 00/10-terminal-and-shell | 3/3 | 掌握管道与重定向 (2>&1, dup2)、awk 列切分；搞透 SIGHUP 与 tmux 守护；SSH -L 端口转发与 find/xargs 机制全通。 |
+| 2026-10-09 | 00/11-linux-for-ai | 3/3 | 掌握单根文件树、八进制权限掩码 (4-2-1)、apt 换源排错；理解 tmux Client-Server 架构；搞透网络下载与跨平台 sed 差异。 |
+
 
 
 ## Review queue
