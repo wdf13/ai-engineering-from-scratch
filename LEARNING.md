@@ -14,7 +14,7 @@
 ## Path
 | Phase | Name | Status | Est. hours |
 |-------|------|--------|------------|
-| 0 | Setup & Tooling | Do | 14 |
+| 0 | Setup & Tooling | Done | 14 |
 | 1 | Math Foundations | Skip | -- |
 | 2 | ML Fundamentals | Skip | -- |
 | 3 | Deep Learning Core | Do | 15 |
@@ -49,6 +49,9 @@
 | 2026-09-23 | 00/09-data-management | 3/3 | IMDB 25000/25000；wiki 流式 5 条（配置改为 20231101.en）；CSV 1.3M vs Parquet 804K；划分 17500/2500/5000。 |
 | 2026-09-24 | 00/10-terminal-and-shell | 3/3 | 掌握管道与重定向 (2>&1, dup2)、awk 列切分；搞透 SIGHUP 与 tmux 守护；SSH -L 端口转发与 find/xargs 机制全通。 |
 | 2026-10-09 | 00/11-linux-for-ai | 3/3 | 掌握单根文件树、八进制权限掩码 (4-2-1)、apt 换源排错；理解 tmux Client-Server 架构；搞透网络下载与跨平台 sed 差异。 |
+| 2026-10-09 | 00/12-debugging-and-profiling | 3/3 | 搞透 AI 三层调试模型；掌握 CUDA 异步与 Timer 测时陷阱；搞懂 Caching Allocator 显存保留机制；掌握 Forward Hook 查 shape、detect_nan 溯源与条件断点。 |
+| 2026-10-09 | 01/01-linear-algebra-intuition | 3/3 | 掌握点积语义与余弦相似度；纯手写投影与正交化残差垂直；推通 90 度旋转矩阵与高斯消元求秩；搞透 LoRA 低秩分解 (4096x4096 -> 16 维分解 128x 压缩)。 |
+| 2026-10-12 | 01/02-vectors-matrices-operations | 2/2 | 手写 Vector/Matrix 与两层前向；NumPy det 为 -2.0000000000000004；3×3 逆与 np.linalg.inv 一致；曾把 b2 记成 (4, 1)。 |
 
 
 
