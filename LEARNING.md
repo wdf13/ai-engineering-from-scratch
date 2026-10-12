@@ -52,6 +52,7 @@
 | 2026-10-09 | 00/12-debugging-and-profiling | 3/3 | 搞透 AI 三层调试模型；掌握 CUDA 异步与 Timer 测时陷阱；搞懂 Caching Allocator 显存保留机制；掌握 Forward Hook 查 shape、detect_nan 溯源与条件断点。 |
 | 2026-10-09 | 01/01-linear-algebra-intuition | 3/3 | 掌握点积语义与余弦相似度；纯手写投影与正交化残差垂直；推通 90 度旋转矩阵与高斯消元求秩；搞透 LoRA 低秩分解 (4096x4096 -> 16 维分解 128x 压缩)。 |
 | 2026-10-12 | 01/02-vectors-matrices-operations | 2/2 | 手写 Vector/Matrix 与两层前向；NumPy det 为 -2.0000000000000004；3×3 逆与 np.linalg.inv 一致；曾把 b2 记成 (4, 1)。 |
+| 2026-10-12 | 01/03-matrix-transformations | 3/3 | 旋转矩阵由两列落点推出；曾把缩放 (2, 0.5) 的高说成 1；行列式是带符号面积；三次复合的 det 等于各 det 之积 1.2。 |
 
 
 
