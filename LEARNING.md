@@ -55,8 +55,7 @@
 | 2026-10-12 | 01/03-matrix-transformations | 3/3 | 旋转矩阵由两列落点推出；曾把缩放 (2, 0.5) 的高说成 1；行列式是带符号面积；三次复合的 det 等于各 det 之积 1.2。 |
 | 2026-10-14 | 01/04-calculus-for-ml | 3/3 | 数值导数与 2x 差约 1e-9；牛顿步对 x² 一步到 0；直线近似在 h=2 时 sin 差约 1.09；动量冲过井底翻到另一侧。 |
 | 2026-10-14 | 01/05-chain-rule-and-autodiff | 3/3 | 手写 Value 得到 dy/dx1=3、dy/dx2=2；同一 x 两路梯度 3+1=4，不清零再反向变 8；XOR 损失从 4.15 降到 0.18，预测符号正确。 |
-
-
+| 2026-10-21 | 01/06-probability-and-distributions | 3/3 | 完成 PMF/PDF、常见分布、CLT 与 Box–Muller；手写 Softmax/Log-Softmax/交叉熵、指数逆变换、独立骰子联合分布及序列 log 概率，SciPy/PyTorch 对照通过。曾困惑为什么 F⁻¹(U) 能采样，经 CDF 概率证明厘清；注意 log 域下溢与 PyTorch CE 需输入 logits。 |
 
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）
