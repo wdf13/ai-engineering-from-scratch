@@ -36,7 +36,9 @@
     "upstream": "rohitg00/ai-engineering-from-scratch",
     "branch": "translations",
     "source": "i18n/zh/phases/01-math-foundations/08-optimization/docs/zh.md",
-    "review_status": "machine translation, unreviewed"
+    "review_status": "carefully retranslated and cross-checked; 24 heading blocks, 17 verbatim code blocks, 4 links preserved",
+    "translation_basis": "docs/en.md (canonical English)",
+    "retranslation_date": "2026-11-04"
   },
   "learner_files": [
     "docs/zh.md",
