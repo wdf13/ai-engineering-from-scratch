@@ -7,7 +7,7 @@
 **先修课程：** Phase 1，第 04—05 课（导数、梯度）  
 **预计用时：** 约 75 分钟
 
-> **精译说明（2026-11-04）：** 本文完整对照本课官方英文 `docs/en.md` 翻译。全部 17 个代码与图示块保持原文不变；术语采用通行的机器学习译名。原文中存在适用条件不明确或过于绝对的表述，以“译注”补充条件，而不直接改变官方代码。本文件替代此前从上游 `translations` 分支导入的未经校对的机器译本。原项目的版权和 MIT 许可证见仓库根目录 `LICENSE`。
+> **精译说明（2026-11-04）：** 本文完整对照本课官方英文 `docs/en.md` 翻译。全部 17 个代码与图示块的主体内容保持原文不变；代码围栏补充语言标识，网站专属 `figure` 指令改为兼容 GitHub 的文本展示。术语采用通行的机器学习译名。原文中存在适用条件不明确或过于绝对的表述，以“译注”补充条件，而不直接改变官方代码。本文件替代此前从上游 `translations` 分支导入的未经校对的机器译本。原项目的版权和 MIT 许可证见仓库根目录 `LICENSE`。
 
 ## 学习目标
 
@@ -30,7 +30,7 @@
 
 优化，就是寻找使一个函数最小（或最大）的输入值。在机器学习里，被优化的是**损失函数**，输入是模型的权重或其他可训练参数。因此，训练本身就是优化过程。
 
-```
+```text
 minimize L(w) where:
   L = loss function
   w = model weights (could be millions of parameters)
@@ -38,23 +38,23 @@ minimize L(w) where:
 
 数学形式为：
 
-\[
+$$
 \min_{\boldsymbol w}L(\boldsymbol w).
-\]
+$$
 
 ### 标准梯度下降（Gradient descent, vanilla）
 
 最基础的优化器：计算损失对每个权重的梯度，再沿梯度相反的方向调整权重。学习率决定每次更新的尺度。
 
-```
+```text
 w = w - lr * gradient
 ```
 
 其迭代公式为：
 
-\[
+$$
 \boldsymbol w_{t+1}=\boldsymbol w_t-\eta\nabla L(\boldsymbol w_t),\qquad \eta>0.
-\]
+$$
 
 这就是核心算法：计算梯度，然后反向迈一步。
 
@@ -67,10 +67,10 @@ graph TD
 
 **译注：** 原图写作“Moving downhill along gradient”，准确地说是沿**负梯度**下降。对于梯度非零的可微点，负梯度方向上的方向导数为
 
-\[
+$$
 \nabla L(\boldsymbol w)^\top[-\nabla L(\boldsymbol w)]
 =-\|\nabla L(\boldsymbol w)\|_2^2<0.
-\]
+$$
 
 这是一阶局部结论；有限步长太大时，损失仍可能上升。
 
@@ -125,7 +125,7 @@ SGD 和 mini-batch 的噪声并不一定是缺点：随机扰动**有时**能帮
 
 **动量法（Momentum）**通过维护一个速度变量，累积过去梯度的信息：
 
-```
+```text
 v = beta * v + gradient
 w = w - lr * v
 ```
@@ -160,7 +160,7 @@ Adam 全称 **Adaptive Moment Estimation（自适应矩估计）**，它针对�
 1. **一阶矩估计（`m`）**：梯度的指数移动平均，与动量机制类似；
 2. **二阶原始矩估计（`v`）**：梯度平方的指数移动平均，反映梯度的平方尺度。
 
-```
+```text
 m = beta1 * m + (1 - beta1) * gradient
 v = beta2 * v + (1 - beta2) * gradient^2
 
@@ -240,7 +240,9 @@ graph TD
 
 **译注：** “尖锐极小值泛化差、平坦极小值泛化好”不能作为无条件定理。尖锐程度会受到参数重参数化和度量方式的影响；不同优化器的泛化优劣必须在一致的数据划分、模型结构与训练预算下实测。
 
-```figure
+> **图示兼容说明：** 下方 `gradient-descent` 是原课程网站的自定义图示标识，不是 GitHub Markdown 图片指令。保留原始标识方便对照；GitHub 页面不会直接生成该交互图。
+
+```text
 gradient-descent
 ```
 
@@ -250,7 +252,7 @@ gradient-descent
 
 **Rosenbrock 函数**是经典优化基准。它在 `(1,1)` 处达到全局最小值，低损失区域是一条狭窄弯曲的谷地：找到低损失区域相对容易，但沿着谷地稳定前进比较困难。
 
-```
+```text
 f(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
 ```
 
@@ -270,10 +272,10 @@ def rosenbrock_gradient(params):
 
 其偏导数是：
 
-\[
+$$
 \frac{\partial f}{\partial x}=-2(1-x)-400x(y-x^2),\qquad
 \frac{\partial f}{\partial y}=200(y-x^2).
-\]
+$$
 
 两个式子均可由链式法则直接得出，并可与中心有限差分进行数值对照。
 
