@@ -14,7 +14,7 @@
 
 ## 中文与个人资料
 
-- `docs/zh.md`：上游 translations 分支的机器译文，**存在明显术语误译，未逐段人工校对**；以 `docs/en.md` 为权威依据。
+- `docs/zh.md`：依据官方英文原文完成全章精译和技术校对；17 个代码图示块与英文原版完全一致，并添加必要的理论译注。仍以 `docs/en.md` 为权威依据。
 - `quiz.zh.json`：中文测验副本，stage、顺序和正确答案索引与官方完全一致。学习时不得提前公布正确答案。
 - `outputs/prompt-optimizer-guide.zh.md`：中文版输出说明。
 - `code/learn.ipynb`：个人学习记录，不得覆盖或清空。
