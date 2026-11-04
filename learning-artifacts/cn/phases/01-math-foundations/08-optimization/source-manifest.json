@@ -1,0 +1,49 @@
+{
+  "lesson": "01/08-optimization",
+  "official_repo": "wdf13/ai-engineering-from-scratch",
+  "official_branch": "my-progress",
+  "official_path": "phases/01-math-foundations/08-optimization",
+  "mirror_path": "learning-artifacts/cn/phases/01-math-foundations/08-optimization/",
+  "official_files": [
+    {
+      "path": "docs/en.md",
+      "blob_sha": "2474924615b045e7f433ddb32a2fa485f8f35065",
+      "mirror_equal": true
+    },
+    {
+      "path": "code/optimizers.py",
+      "blob_sha": "4f3584b83216a2093943a43b861ddff79c23c694",
+      "mirror_equal": true
+    },
+    {
+      "path": "code/main.jl",
+      "blob_sha": "19461ba7deeaf4e7b8e1efb15bb10d66a3477482",
+      "mirror_equal": true
+    },
+    {
+      "path": "quiz.json",
+      "blob_sha": "49c3d92c83eacd187293a74eedcf383b13670f4b",
+      "mirror_equal": true
+    },
+    {
+      "path": "outputs/prompt-optimizer-guide.md",
+      "blob_sha": "3aa9de3dc0976cd301ef6f240ce73d85654f181d",
+      "mirror_equal": true
+    }
+  ],
+  "chinese_lecture": {
+    "path": "docs/zh.md",
+    "upstream": "rohitg00/ai-engineering-from-scratch",
+    "branch": "translations",
+    "source": "i18n/zh/phases/01-math-foundations/08-optimization/docs/zh.md",
+    "review_status": "machine translation, unreviewed"
+  },
+  "learner_files": [
+    "docs/zh.md",
+    "quiz.zh.json",
+    "outputs/prompt-optimizer-guide.zh.md",
+    "code/learn.ipynb",
+    "README.md",
+    "source-manifest.json"
+  ]
+}
