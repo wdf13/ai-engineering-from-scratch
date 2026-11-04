@@ -36,9 +36,15 @@
     "upstream": "rohitg00/ai-engineering-from-scratch",
     "branch": "translations",
     "source": "i18n/zh/phases/01-math-foundations/08-optimization/docs/zh.md",
-    "review_status": "carefully retranslated and cross-checked; 24 heading blocks, 17 verbatim code blocks, 4 links preserved",
+    "review_status": "Full Chinese translation; canonical English sections aligned; 17 original fenced block bodies preserved, fenced syntax adjusted for GitHub Markdown",
     "translation_basis": "docs/en.md (canonical English)",
-    "retranslation_date": "2026-11-04"
+    "retranslation_date": "2026-11-04",
+    "markdown_format": {
+      "block_math": "$$",
+      "fenced_languages": "text/python/mermaid",
+      "figure": "custom site directive explained as text",
+      "original_fenced_bodies_preserved": true
+    }
   },
   "learner_files": [
     "docs/zh.md",
