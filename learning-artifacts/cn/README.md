@@ -1,28 +1,23 @@
-# 中文学习对照（整课镜像）
+# 中文学习对照：完整课程镜像
 
-官方正文在 `phases/<阶段>/<课>/`，英文为准，不要改那边的文件。
+**每次开始新课前，先读 [AGENTS.md](AGENTS.md) 的长期规则。不能只导入中文讲义。** 官方正文、代码、原始测验、所有输出与附加文件，必须按实际目录逐项完整镜像，完成路径和 SHA 校验后再教学。
 
-这里按**同一课目录结构**放中文对照和学习用副本：
+## 文件对应关系
 
 ```text
-官方:  phases/<阶段>/<课>/docs/en.md
+官方:  phases/<阶段>/<课>/docs/*
        phases/<阶段>/<课>/code/*
        phases/<阶段>/<课>/quiz.json
        phases/<阶段>/<课>/outputs/*
+       以及该课所有实际存在的其他文件
 
-对照:  learning-artifacts/cn/phases/<阶段>/<课>/docs/cn.md
-       learning-artifacts/cn/phases/<阶段>/<课>/code/
+镜像:  learning-artifacts/cn/phases/<阶段>/<课>/docs/*
+       learning-artifacts/cn/phases/<阶段>/<课>/code/*
        learning-artifacts/cn/phases/<阶段>/<课>/quiz.json
-       learning-artifacts/cn/phases/<阶段>/<课>/outputs/
+       learning-artifacts/cn/phases/<阶段>/<课>/outputs/*
+       以及对应的其他文件，原版内容不修改
 ```
 
-| 官方有什么 | 这里怎么放 |
-|------------|------------|
-| `docs/en.md` | 译为 `docs/cn.md` |
-| `code/` | 原样复制；注释/打印说明译成中文；标识符不译 |
-| `quiz.json` | 题干、选项、解析译成中文；`correct` 下标不变 |
-| `outputs/*.md` | 提示词译成中文 |
+中文额外材料（独立于原版）：`docs/zh.md`（标注翻译来源及质量）、`quiz.zh.json`（与官方测验答案下标一致）、`outputs/*.zh.md`（中文说明）。个人作答追加在 `code/learn.ipynb`，绝不覆盖。
 
-额外文件（如 `first_call.py` DeepSeek 版、WSL 安装脚本）会留在同一 `code/` 里，不覆盖官方文件名。
-
-代码、API、论文术语保持英文。进度记在仓库根目录 `LEARNING.md`。
+官方 `phases/` 是权威版本。学完所有练习和 post-quiz 后，将完成情况写入仓库根目录 `LEARNING.md`。

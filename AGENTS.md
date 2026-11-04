@@ -6,6 +6,12 @@ The repo is a curriculum, not a SaaS app. The lessons are the product. Every rul
 
 ---
 
+## Personal learner mirror protocol (wdf13 / my-progress)
+
+**For lessons studied under `learning-artifacts/cn/`, read `learning-artifacts/cn/AGENTS.md` and root `LEARNING.md` first.** Before any new lesson, enumerate the entire official `phases/<phase>/<lesson>/` directory and mirror ALL original lesson files (docs, code, quiz, outputs, extras) with byte-identical content into the matching `learning-artifacts/cn/phases/` directory. Keep the student's `code/learn.ipynb` intact; add separately sourced Chinese counterparts; verify mirrored paths and blob hashes before teaching. Grade incrementally, save original responses/tests, and mark the lesson complete only after all official exercises and post-quiz. These scoped rules apply to the personal learning fork, not to authoring upstream curriculum content.
+
+---
+
 ## Philosophy
 
 523 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported. You write backprop, the tokenizer, the attention mechanism, and the agent loop by hand in Python, TypeScript, Rust, or Julia. Then you run the same operation through the production library so the framework stops being a black box. The "Build It / Use It" split is the spine. Each lesson ships a reusable artifact you can plug into your daily workflow.

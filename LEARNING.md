@@ -5,6 +5,11 @@
 ## Mission
 做一个具体的产品；本人是软件工程研究生，需要研究 AI 工程这一方向。学完要能自己搭建 agent、自己搭建各类模型，并对各类模型做进一步研究。用简体中文授课；日常目录 WSL `~/ai-engineering-from-scratch`；LLM 调用可用 DeepSeek。先学完 Phase 0，再补线性代数/梯度/链式法则，然后 3→7→10→11→13→14。
 
+## Persistent learning workflow
+
+Before beginning another lesson, read `learning-artifacts/cn/AGENTS.md`. Mirror the **entire** corresponding official lesson directory before teaching (original English docs, all code, quiz, outputs, any extra files; separate Chinese materials), compare paths and blob SHAs, and preserve the learner's `code/learn.ipynb`. Use one-at-a-time exercises with actual tests. Only log full completion here when all official exercises and post-quiz are done.
+
+
 ## Placement
 - Date: 2026-09-20
 - Score: self-selected
