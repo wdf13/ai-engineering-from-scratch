@@ -57,6 +57,9 @@
 | 2026-10-14 | 01/05-chain-rule-and-autodiff | 3/3 | 手写 Value 得到 dy/dx1=3、dy/dx2=2；同一 x 两路梯度 3+1=4，不清零再反向变 8；XOR 损失从 4.15 降到 0.18，预测符号正确。 |
 | 2026-10-21 | 01/06-probability-and-distributions | 3/3 | 完成 PMF/PDF、常见分布、CLT 与 Box–Muller；手写 Softmax/Log-Softmax/交叉熵、指数逆变换、独立骰子联合分布及序列 log 概率，SciPy/PyTorch 对照通过。曾困惑为什么 F⁻¹(U) 能采样，经 CDF 概率证明厘清；注意 log 域下溢与 PyTorch CE 需输入 logits。 |
 
+| 2026-11-04 | 01/07-bayes-theorem | 3/3 | 四道官方练习完成：两次阳性序贯 Bayes、Laplace 平滑、从零 NaiveBayes 加邮件长度特征、Beta–Binomial MAP。代码验证与 sklearn 对照详见 learning-artifacts/cn/phases/01-math-foundations/07-bayes-theorem/code/learn.ipynb；复习重点：先验众数与 MAP、OOV、长度特征条件独立近似。 |
+
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）
 - 00/03-gpu-setup-and-cloud：`torch.cuda.synchronize()` 是等 GPU 算完再停表，不是 `.to("cuda")` 拷数据
+- 01/07-bayes-theorem：独立区分 MLE、MAP、先验众数、后验均值；设计 OOV 处理并用独立验证集检查长度特征收益。
