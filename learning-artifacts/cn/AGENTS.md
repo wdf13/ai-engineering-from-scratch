@@ -12,6 +12,13 @@
 6. **同步完成检查**：核对官方文件清单与镜像原始文件清单一一对应，检验 Git blob SHA 或内容一致；检查中文课件、测试及输出文件已落位，Notebook 可打开。验证完成后才开始新课教学。
 7. **教学和成绩**：按一问一答方式让学习者独立计算与写代码；对结果进行数学检查及实际可运行测试。每次讲评保存到 `my-progress` 分支 Notebook；必须完成官方所有练习及后测才能将整课标记完成并更新 `LEARNING.md`。
 
+## 官方课程顺序和评分检查点
+
+- 每课完整镜像后先读取该课原版 `quiz.json`，按 `stage=pre` 的原始次序逐题完成前测；不得在学生作答前透露 `correct` 或解析。前后测的题数以该课 JSON 为准，不能推测。
+- 然后依照 `docs/en.md` 的顺序推进目标、Problem、Concept、Build It 各步骤、Use It、Ship It、全部 Exercises，最后依次进行 `stage=post` 正式后测。补充推导、代码和测试应注明“补充”，不可替代官方练习。
+- 每次保留学生原始提交、验收与真实验证结果；只有所有 Exercises 和 Post Quiz 完成才标记整课完成，更新根目录 `LEARNING.md`。
+- 如果误漏前测，只能迟做并标注“补做前测，非真实课前基线”，补做后恢复原先教学进度，不抹除既有作答。
+
 ## Git 工作流
 
 本地仓库位于 WSL `~/ai-engineering-from-scratch`。在本地学习前先看 `git status`，处理未提交修改后执行 `git fetch origin`、`git switch my-progress`、`git pull --ff-only origin my-progress`。绝不以强制重置的方式丢弃用户文件。
