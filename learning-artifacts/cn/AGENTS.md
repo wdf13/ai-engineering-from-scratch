@@ -12,12 +12,19 @@
 6. **同步完成检查**：核对官方文件清单与镜像原始文件清单一一对应，检验 Git blob SHA 或内容一致；检查中文课件、测试及输出文件已落位，Notebook 可打开。验证完成后才开始新课教学。
 7. **教学和成绩**：按一问一答方式让学习者独立计算与写代码；对结果进行数学检查及实际可运行测试。每次讲评保存到 `my-progress` 分支 Notebook；必须完成官方所有练习及后测才能将整课标记完成并更新 `LEARNING.md`。
 
+## 官方交互教学 Skill 优先级（2026-11-06 修订）
+
+- 每次开始或续学课程，**必须首先读取仓库的 `skills/learn/SKILL.md`**（`.claude/skills/learn/SKILL.md` 为对应镜像），然后读取根目录 `LEARNING.md`、本课原始 `docs/en.md`、`quiz.json`、当前 `code/learn.ipynb`；需要时阅读本课 `outputs/` 作为 Ship It 交付物背景。不可把 `outputs/prompt-*.md` 误认成授课的 Prompt。
+- `learn` Skill 的正确教学顺序：回顾上一课两道题（若上一课已记录、此前未完成此回顾）→ 用 2～3 句话讲实际问题 → **通俗讲清一个核心概念，停下来让学生理解检查，随后逐步推导数学** → Build It 分段解读（每段约 5～15 行、说明作用与原因、提出预测题、让学生亲手写并验证）→ Use It 生产框架 → 完成官方练习与 Ship It 交付 → `quiz.json` 的 post-quiz 逐题评分 → 更新 `LEARNING.md`。根据学生理解程度调整节奏，未答之前不得自行推进到下一段。
+- **纠正此前记录的误判：** `skills/learn/SKILL.md` 未要求将 `stage=pre` 的题目设为开课前强制门槛；`stage=post` 才是 Skill 明确要求完成的正式课程 Quiz。可按需要使用 pre 作诊断，但不得因此中断概念讲解，也不得把迟做前测当成真实入学基线。此前追加的数学检查、数值差分与课堂手算保留为补充练习，不算官方 Exercises。
+- 若该课前面已进入 Build It，但概念教学不足，应**先补齐理解缺口再继续代码**；保留既有学生代码和测试，不重置或伪造成绩。输出 Prompt 是该课 Ship It 产品之一，先阅读了解课程交付目标，具体讲解仍按核心教学 Skill 进行。
+
 ## 官方课程顺序和评分检查点
 
-- 每课完整镜像后先读取该课原版 `quiz.json`，按 `stage=pre` 的原始次序逐题完成前测；不得在学生作答前透露 `correct` 或解析。前后测的题数以该课 JSON 为准，不能推测。
-- 然后依照 `docs/en.md` 的顺序推进目标、Problem、Concept、Build It 各步骤、Use It、Ship It、全部 Exercises，最后依次进行 `stage=post` 正式后测。补充推导、代码和测试应注明“补充”，不可替代官方练习。
+- 每课完整镜像后先读取 `skills/learn/SKILL.md` 和该课 `docs/en.md`、`quiz.json`；`stage=pre` 可作为可选诊断，不得强制卡住教学进度；正式题目的数量与顺序以该课 `stage=post` 为准。不得在学生作答前透露 `correct` 或解析。
+- 按 `skills/learn/SKILL.md` 的交互方式进行知识回顾与 Problem → Concept（先讲直觉、提理解问题、再逐步推导）→ Build It（按 5～15 行小段并等待学生回答）→ Use It → 课程 Exercises 和 Ship It → Post Quiz。补充推导、代码和测试应注明“补充”，不可替代官方练习。
 - 每次保留学生原始提交、验收与真实验证结果；只有所有 Exercises 和 Post Quiz 完成才标记整课完成，更新根目录 `LEARNING.md`。
-- 如果误漏前测，只能迟做并标注“补做前测，非真实课前基线”，补做后恢复原先教学进度，不抹除既有作答。
+- 若之前遗漏可选前测，可标注为“补做前测（非真实课前基线）”并保存，不要求补齐其余前测才能继续讲解；若遗漏了 Concept 或其他必需教学环节，先补齐该环节再恢复对应 Build It 进度，保留既有提交。
 
 ## Git 工作流
 
