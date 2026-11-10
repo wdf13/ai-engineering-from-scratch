@@ -36,7 +36,7 @@
 - [x] Use It 部分：PyTorch SGD/AdamW/CosineAnnealingLR 调用已能运行
 - [ ] Learning Rate Schedules：Step Decay、Cosine 数学推导、Warmup + Decay 的完整理解与实践
 - [x] Convex vs Non-convex：严格定义、局部/全局最优、适用条件；学生用 g(x)=(x²-1)² 的 Jensen 反例和二阶导数证明并通过理解检查（2026-11-10）
-- [ ] Loss Landscape：参数空间二维切片可视化、方法与局限
+- [x] Loss Landscape：已生成 Rosenbrock 的真实二维等高线图；学习高维二维切片定义与局限，学生通过谷底线梯度、Hessian 条件数及 GD 误差收缩理解检查（2026-11-10）
 - [ ] AdamW 解耦权重衰减：与 Adam/L2 惩罚的差异及数值例子
 - [ ] Use It 延伸：参数组、梯度裁剪及如何在生产训练中配置调度频率
 - [ ] Ship It：官方 outputs/prompt-optimizer-guide.md 对应的实操交付
