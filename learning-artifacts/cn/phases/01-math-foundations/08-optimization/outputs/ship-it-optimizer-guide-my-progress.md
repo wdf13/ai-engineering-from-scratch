@@ -1,60 +1,126 @@
-# Ship It：优化器选择指南（个人实践草稿，待复核）
+# Ship It：Transformer 优化器选择指南（个人实践交付版）
 
-> 对应课程：01/08 Optimization；官方材料为 phases/01-math-foundations/08-optimization/outputs/prompt-optimizer-guide.md。此文件是**个人实践草稿**，不改动官方材料。日期：2026-11-11。状态：**待用户修订确认**，不是已验收的课程交付成果。
+> 课程：01/08 Optimization · 日期：2026-11-11 · 状态：**Ship It 已完成，正式 Post Quiz 待进行**  
+> 依据：官方 \`phases/01-math-foundations/08-optimization/outputs/prompt-optimizer-guide.md\`。本文件为学生决策方案及教师复核，不修改官方原文。超参数是待验证的初始候选，不是跨任务的最优值。
 
-## 任务设定
+## 任务定义与决策边界
 
-- 模型：从零训练 Transformer；数据集、模型参数量、batch size 和硬件未指定
-- 总优化器参数更新预算：10,000
-- optimizer.step 和 scheduler.step 频率：每 mini-batch 各调用一次，且 scheduler.step 在 optimizer.step 后执行
-- 目标：训练损失稳定下降，同时验证集泛化指标改善；调参需要独立验证
+从零训练 Transformer，总预算 **10,000 次 optimizer.step()**；对每次成功的参数更新调用一次 scheduler.step()。具体数据集、参数规模、有效 batch size、精度与设备未限定，训练是否有效必须由后续实际任务实验确认。
 
-## 学生原始方案（未经修改）
+学生原始回答已完整保存在 \`../code/learn.ipynb\`，这里保留原始方案的关键配置：AdamW、峰值 lr=0.001、weight_decay=0.1、Warmup 1000 步、Cosine 9000 步、全局梯度范数阈值 5、优先排查高学习率、不因验证指标停滞直接切换 SGD。
 
-> lr 我选择0.001 weight_decay = 0.1 我想让它的权重按照10%的进行衰退,lr设置0.001 是为了让warmup能有上升空间, 我想让warmup走1000步,cosine走9000步让他前期通过大的学习率快速寻找,在1000步的时候切换,使用global norm 初始 max_norm 设置为5,不想让梯度太大了,我会优先检查学习率是否偏大,让学习率降低,不会loss下降代表我们再持续学习,但是验证指标长时间不改善这要考虑到过拟合的问题
+**用户最终确认**（原文）：
 
-## 1. 初始优化器与参数
+> 我只是把weight_decay=0.1作为正则化超参数，并不要求权重精确减少10%，请据此修订Ship It方案。
 
-- 学生选择：AdamW，peak LR=0.001，weight_decay=0.1。
-- 评审：AdamW 是合适的基线；峰值 0.001 可作为激进候选，但官方 Transformer 经验起点 LR 在 1e-4~3e-4，建议与 1e-4、3e-4 做固定预算对比，而非断言 0.001 更好。
-- 纠正：每步纯权重衰减比例为 lr_t * weight_decay，LR 达峰值时是 0.001 * 0.1 = 0.0001 = **0.01%**，不是 10%。实际参数总变化还取决于任务梯度。
-- 待明确：“希望权重按照 10% 衰退”究竟是单步、全程累计，还是仅指正则化强度超参数。
+因此 \`weight_decay=0.1\` 被视为**可调正则化超参数**，不是要求单步或全程权重数值减少 10% 的约束。
 
-## 2. 学习率调度
+## 1. 推荐优化器与初始超参数
 
-- Warmup：1,000 次调度；Cosine Decay：9,000 次调度；切换 milestone=[1000]。这三项正确。
-- 可以使用 LinearLR(start_factor=0.01,end_factor=1.0,total_iters=1000) + CosineAnnealingLR(T_max=9000,eta_min=0) + SequentialLR。
-- 若峰值为 0.001，那么 Warmup 起点为 1e-5，到第一次切换时达到 0.001，然后随 Cosine 下降；Warmup 并不是一开始就用较大学习率。
-- 需要记录每次更新实际使用 LR 和下一次预备 LR，防止 off-by-one 与频率错误。
+| 配置 | 主实验 | 合理性与验证方式 |
+|---|---|---|
+| Optimizer | AdamW | 将 weight decay 从自适应梯度矩估计解耦 |
+| 峰值学习率 | **0.001** | 保留学生选择；对 Transformer 是相对激进的候选，建议同预算追加 0.0003 的控制实验 |
+| Betas | (0.9, 0.999) | 作为 AdamW 常用初值，需观察损失稳定性 |
+| Epsilon | 1e-8 | AdamW 常用初值 |
+| Weight decay | **0.1** | 用户确认作为正则化超参数；依据验证指标调整 |
+| 参数组 | 矩阵/权重张量设 0.1，bias/Norm 等一维参数设 0 | 常见工程配方，可根据模型结构修改 |
+| Gradient clipping | Global L2 norm，**max_norm=5.0** | 保留学生选择；建议同时评估阈值 1.0，并记录裁剪频率 |
 
-## 3. 梯度裁剪
+**精确含义**：AdamW 当前步纯 weight decay 对参数的乘性系数为 \((1-\eta_t\lambda)\)。峰值 lr=0.001、lambda=0.1 时，单步纯衰减系数为 0.9999，即衰减项为 **0.01%**。实际参数总变化还包含任务损失的 Adam 更新。Weight decay 参数不是固定权重百分比目标。
 
-- 学生选择：Global Norm Clipping, max_norm=5。
-- 可以作为候选阈值，但相较官方 Transformer 示例 max_norm=1 更宽松。建议记录裁剪前范数、裁剪触发频率、训练损失和验证指标，再判断是否调整。
-- 对 AMP 混合精度训练，在 clip_grad_norm_ 前正确 unscale_；梯度范数阈值不等于 AdamW 参数更新范数的上限。
+## 2. 学习率计划与调用顺序
 
-## 4. 不稳定与异常信号
+- 采用线性 Warmup：前 **1000** 次调度，LR 从 peak_lr×0.01（1e-5）升至 peak_lr（0.001）。
+- 随后 CosineAnnealingLR：剩余 **9000** 次调度，从峰值平滑下降到 0。
+- SequentialLR 的里程碑为 **[1000]**，不是 [9000]。
+- 每次成功的 optimizer.step() 后调用 scheduler.step()；使用 AMP 时，被 GradScaler 跳过的优化器更新不应错误推进按 optimizer-update 计数的调度器。
+- 与“前期用大学习率快速寻找”不同，Warmup **先用较小 LR 保持初期稳定**，之后才到达峰值。到第 1000 次 scheduler.step() 结束时**下一次更新**将使用 0.001；第 1001 次 optimizer.step() 是第一个使用峰值的更新。
 
-- 首先检查：真实学习率轨迹、梯度范数及其分布、loss 是否非有限、输入及标签是否非有限、梯度缩放/数值溢出、数据管线和损失实现。
-- 若训练损失爆炸/NaN：可先降低 peak LR 或缩短过于激进的阶段，检查 warmup/clip 是否生效。必要时定位第一个产生 NaN/Inf 的 batch 与算子，不能简单视为学习率过大。
-- 同时观察：train loss、validation loss/任务指标、梯度裁剪比率、更新幅度，固定随机种子及相同更新预算比较。
+## 3. 最小可运行 PyTorch 配置
 
-## 5. 何时改变优化器
+下例的 TransformerEncoderLayer 和随机数据仅用于验证配置、API 调用和一次计算图反向传播；**并未训练一个真实任务的 Transformer 模型**。
 
-- 仅因为验证集指标长期不改善，不应自动切换 SGD。
-- train loss 持续下降同时 validation loss 回升、泛化差距扩大时，更支持过拟合，需要检查数据划分、正则化、早停、数据增强。
-- validation 指标平台期也可能来自优化停滞、学习率配置、噪声、分布偏移或指标本身问题，应分解原因，必要时再将 AdamW 与 SGD+Momentum 比较。
-- 官方指南中“Adam 一定走向 sharp minima、SGD 一定泛化更好”只是经验简化，不能作为无条件定理。
+    import torch
+    from torch import nn
 
-## 数值验收：仅衰减项的可复现实验
+    model = nn.TransformerEncoderLayer(
+        d_model=16, nhead=4, dim_feedforward=32, batch_first=True
+    ).double()
 
-环境：PyTorch 2.10.0+cpu，float64；单参数 w=2，任务梯度为存在的零张量，AdamW peak LR=0.001, weight_decay=0.1；LinearLR warmup 1,000 步、cosine 9,000 步，T_max=9000；总 10,000 次 optimizer.step + scheduler.step。
+    decay, no_decay = [], []
+    for p in model.parameters():
+        if not p.requires_grad:
+            continue
+        (decay if p.ndim >= 2 else no_decay).append(p)
 
-结果：第 10,000 次更新后 w=1.212431831781，纯衰减保留因子 0.6062159158902877，累计减少约 39.38%。这验证了总衰减是逐步因子乘积，不是把 weight_decay=0.1 解释成“全程减少 10%”。**此实验没有真实 Transformer 训练，不可当作模型精度或泛化结论。**
+    optimizer = torch.optim.AdamW(
+        [{"params": decay, "weight_decay": 0.1},
+         {"params": no_decay, "weight_decay": 0.0}],
+        lr=0.001, betas=(0.9, 0.999), eps=1e-8,
+    )
+    warmup = torch.optim.lr_scheduler.LinearLR(
+        optimizer, start_factor=0.01, end_factor=1.0, total_iters=1000
+    )
+    cosine = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=9000, eta_min=0.0
+    )
+    scheduler = torch.optim.lr_scheduler.SequentialLR(
+        optimizer, [warmup, cosine], milestones=[1000]
+    )
 
-## 待用户最终确认
+    # 仅演示一个训练更新；真实训练须替换为任务数据和正确损失
+    batch = torch.randn(2, 4, 16, dtype=torch.float64)
+    optimizer.zero_grad(set_to_none=True)
+    outputs = model(batch)
+    loss = (outputs - batch).square().mean()
+    loss.backward()
+    original_norm = torch.nn.utils.clip_grad_norm_(
+        model.parameters(), max_norm=5.0, error_if_nonfinite=True
+    )
+    optimizer.step()
+    scheduler.step()
+    print(loss.item(), original_norm.item(), optimizer.param_groups[0]["lr"])
 
-- [ ] 对 10% 衰减目标的语义与对应正则化参数作出说明
-- [ ] 明确学习率峰值选择的对照实验设计（可以保留 lr=0.001 作为一组）
-- [ ] 按五部分最终完善方案，师生复核后将 Ship It 标记完成
-- [ ] 进行原始 quiz.json 的三道 stage=post 正式后测
+实现要点：先 backward 再 clip，再 optimizer.step()，最后 scheduler.step()。clip_grad_norm_ **返回裁剪前**梯度范数，且改变 .grad。参数组的 \`p.ndim>=2\` 是本例的简化规则，不是所有模型结构的统一规范。
+
+## 4. 监控指标与异常处理
+
+每个优化器更新步或固定间隔记录：实际 LR、训练 Loss、验证集 Loss/任务指标、裁剪前梯度范数、裁剪频率、非有限数值事件、必要时参数更新幅度。控制实验须保持数据划分、更新预算、评估指标和随机性口径一致。
+
+| 异常 | 优先检查 | 动作 |
+|---|---|---|
+| Loss 爆炸/NaN | LR 轨迹、输入/标签中的 NaN/Inf、损失实现、梯度非有限、AMP 溢出 | 必要时将峰值 LR 下调，定位第一个异常 batch 或算子，核查裁剪及梯度缩放 |
+| Loss 降得很慢 | Warmup 是否过长、峰值 LR、梯度范数分布、模型容量、数据管线 | 检查实际 LR 与瓶颈，再开展单变量对照 |
+| Train Loss 下降，Validation Loss 上升 | 泛化差距、验证数据一致性、评估模式 | 考虑正则化、数据增强或早停 |
+| Train Loss 下降，验证指标平台 | 验证指标定义、分布偏移、评估噪声、LR 是否合适 | 不立刻定性为过拟合，检查验证 Loss 与任务指标走势 |
+
+## 5. 何时修改策略或切换优化器
+
+默认先使用 AdamW 跑通可复现的任务基线。若实际训练不稳定，先修正数值问题、学习率和数据管线，再考虑优化器替换。若验证性能长期不改善，首先区分过拟合、优化不足、评估噪声与数据分布问题；**不自动切换 SGD**。若确需比较 SGD+Momentum，应使用同等训练预算、合理各自学习率与调度器、多个随机种子或等效置信度评估，不预设哪一种必然泛化更好。
+
+建议的少量有根据的对照实验：
+1. 保留主实验 (peak LR=0.001, WD=0.1, clip=5)；
+2. 仅降低峰值 LR 至 0.0003，其余不变，评估稳定性和验证指标；
+3. 如果频繁出现很大梯度，再将 max_norm 从 5 调为 1 进行单变量对照；
+4. 视验证集表现考虑 WD 取 0.01 与 0.1 的对照，不要求精确的参数缩减百分比。
+
+## 教师复核与可复现实验
+
+**实际执行环境**：PyTorch 2.10.0+cpu，float64，单参数纯衰减测试；另用 TransformerEncoderLayer(d_model=16,nhead=4) 随机输入完成一次真实 backward/clip/optimizer/scheduler step。
+
+- 零任务梯度、w0=2、peak LR=0.001、WD=0.1、Warmup=1000、Cosine=9000、共 10000 步：w_final = **1.2124318317805753**。
+- 纯衰减因子 \(\prod_{t=0}^{9999}(1-\eta_t\lambda)=0.6062159158902877\)，累计减少 **39.3784%**。这是特意隔离机制的数值试验，**不是**用户设定的 10% 目标，更不是 Transformer 训练成效。
+- Warmup 第 1 次更新实际 LR=1e-5；第 1000 次使用 0.00099901；第 1001 次使用 0.001；第 10000 次结束后 LR 为 0。
+- 一次模型梯度计算与参数组/裁剪/调度调用链运行通过；随机数据演示不代表任何真实模型效果。
+- 对照实验与实际任务效果**尚未执行**，不宣称存在训练或泛化提升。
+
+## 课程状态
+
+- [x] 已保存学生原始方案与后续语义澄清
+- [x] 根据确认把 WD=0.1 定义为正则化候选，而非精确权重收缩目标
+- [x] 给出完整的五部分优化器决策与可运行配置
+- [x] 数值及基本调用链实际复核
+- [ ] 官方 \`quiz.json\` 的三个 stage=post 题逐题作答并评分
+
+**Ship It 交付验收通过；本课仍需 Post Quiz 才能登记完成。**
