@@ -1,19 +1,19 @@
 # Ship It：Transformer 优化器选择指南（个人实践交付版）
 
 > 课程：01/08 Optimization · 日期：2026-11-11 · 状态：**Ship It 已完成，正式 Post Quiz 待进行**  
-> 依据：官方 \`phases/01-math-foundations/08-optimization/outputs/prompt-optimizer-guide.md\`。本文件为学生决策方案及教师复核，不修改官方原文。超参数是待验证的初始候选，不是跨任务的最优值。
+> 依据：官方 `phases/01-math-foundations/08-optimization/outputs/prompt-optimizer-guide.md`。本文件为学生决策方案及教师复核，不修改官方原文。超参数是待验证的初始候选，不是跨任务的最优值。
 
 ## 任务定义与决策边界
 
 从零训练 Transformer，总预算 **10,000 次 optimizer.step()**；对每次成功的参数更新调用一次 scheduler.step()。具体数据集、参数规模、有效 batch size、精度与设备未限定，训练是否有效必须由后续实际任务实验确认。
 
-学生原始回答已完整保存在 \`../code/learn.ipynb\`，这里保留原始方案的关键配置：AdamW、峰值 lr=0.001、weight_decay=0.1、Warmup 1000 步、Cosine 9000 步、全局梯度范数阈值 5、优先排查高学习率、不因验证指标停滞直接切换 SGD。
+学生原始回答已完整保存在 `../code/learn.ipynb`，这里保留原始方案的关键配置：AdamW、峰值 lr=0.001、weight_decay=0.1、Warmup 1000 步、Cosine 9000 步、全局梯度范数阈值 5、优先排查高学习率、不因验证指标停滞直接切换 SGD。
 
 **用户最终确认**（原文）：
 
 > 我只是把weight_decay=0.1作为正则化超参数，并不要求权重精确减少10%，请据此修订Ship It方案。
 
-因此 \`weight_decay=0.1\` 被视为**可调正则化超参数**，不是要求单步或全程权重数值减少 10% 的约束。
+因此 `weight_decay=0.1` 被视为**可调正则化超参数**，不是要求单步或全程权重数值减少 10% 的约束。
 
 ## 1. 推荐优化器与初始超参数
 
@@ -82,7 +82,7 @@
     scheduler.step()
     print(loss.item(), original_norm.item(), optimizer.param_groups[0]["lr"])
 
-实现要点：先 backward 再 clip，再 optimizer.step()，最后 scheduler.step()。clip_grad_norm_ **返回裁剪前**梯度范数，且改变 .grad。参数组的 \`p.ndim>=2\` 是本例的简化规则，不是所有模型结构的统一规范。
+实现要点：先 backward 再 clip，再 optimizer.step()，最后 scheduler.step()。clip_grad_norm_ **返回裁剪前**梯度范数，且改变 .grad。参数组的 `p.ndim>=2` 是本例的简化规则，不是所有模型结构的统一规范。
 
 ## 4. 监控指标与异常处理
 
@@ -121,6 +121,6 @@
 - [x] 根据确认把 WD=0.1 定义为正则化候选，而非精确权重收缩目标
 - [x] 给出完整的五部分优化器决策与可运行配置
 - [x] 数值及基本调用链实际复核
-- [ ] 官方 \`quiz.json\` 的三个 stage=post 题逐题作答并评分
+- [ ] 官方 `quiz.json` 的三个 stage=post 题逐题作答并评分
 
 **Ship It 交付验收通过；本课仍需 Post Quiz 才能登记完成。**
