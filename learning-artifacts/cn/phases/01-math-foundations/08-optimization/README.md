@@ -39,7 +39,7 @@
 - [x] Loss Landscape：已生成 Rosenbrock 的真实二维等高线图；学习高维二维切片定义与局限，学生通过谷底线梯度、Hessian 条件数及 GD 误差收缩理解检查（2026-11-10）
 - [x] AdamW 解耦权重衰减：与耦合 L2/Adam 的矩估计区别、实际数值实验；学生完成衰减比例、分组与双矩影响理解检查（2026-11-11）
 - [x] Use It 延伸：参数组、梯度裁剪及训练步级调度频率；学生通过 weight_decay=0 与 global-norm clipping 理解检查，PyTorch 2.10.0 CPU 实际验证（2026-11-11）
-- [ ] Ship It：官方 outputs/prompt-optimizer-guide.md 对应的实操交付
+- [ ] Ship It：官方 outputs/prompt-optimizer-guide.md 对应的实操交付（学生方案及评审草稿见 outputs/ship-it-optimizer-guide-my-progress.md，尚待用户修订）
 - [ ] Post Quiz：官方 quiz.json 中全部 stage=post 问题逐题作答与评分
 
 **课程暂为进行中**。用户明确反馈：填空/验收比例过高，原理讲解不足。接下来按官方课程顺序补足核心概念；一轮深入讲清一个小节，再做理解检查。未完成上述事项前不得标记整课完成。
