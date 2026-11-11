@@ -64,6 +64,8 @@ Before beginning another lesson, read `learning-artifacts/cn/AGENTS.md`. Mirror 
 
 | 2026-11-04 | 01/07-bayes-theorem | 3/3 | 四道官方练习完成：两次阳性序贯 Bayes、Laplace 平滑、从零 NaiveBayes 加邮件长度特征、Beta–Binomial MAP。代码验证与 sklearn 对照详见 learning-artifacts/cn/phases/01-math-foundations/07-bayes-theorem/code/learn.ipynb；复习重点：先验众数与 MAP、OOV、长度特征条件独立近似。 |
 
+| 2026-11-11 | 01/08-optimization | 3/3 | 完成四道官方练习、Ship It 优化器选择指南及正式后测；掌握 AdamW 解耦 weight decay、Warmup+Cosine 计步、梯度裁剪与 Rosenbrock Hessian/局部曲率。复习重点：weight_decay=0.1 不是固定减少 10%，Hessian 正定不单独保证全局最优。 |
+
 ## Review queue
 - 00/01-dev-environment：如何确认 PyTorch 能用到 GPU（`torch.cuda.is_available()`，Apple 上是 MPS；`__version__` 只说明装了哪一版）
 - 00/03-gpu-setup-and-cloud：`torch.cuda.synchronize()` 是等 GPU 算完再停表，不是 `.to("cuda")` 拷数据
