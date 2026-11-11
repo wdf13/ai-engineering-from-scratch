@@ -1,0 +1,59 @@
+{
+  "lesson": "01/09-information-theory",
+  "official_repo": "wdf13/ai-engineering-from-scratch",
+  "official_branch": "my-progress",
+  "official_path": "phases/01-math-foundations/09-information-theory/",
+  "mirror_path": "learning-artifacts/cn/phases/01-math-foundations/09-information-theory/",
+  "official_files": [
+    {
+      "path": "code/information_theory.py",
+      "blob_sha": "fb1f900d605d7685741f08fa6a04860b77e69a4b",
+      "mirror_equal": true
+    },
+    {
+      "path": "docs/en.md",
+      "blob_sha": "c7560ef4494344e9d4581958a3631512cba620f2",
+      "mirror_equal": true
+    },
+    {
+      "path": "outputs/skill-information-theory.md",
+      "blob_sha": "b9df386aecff3cc8fba5899b28c795ac2f9918b8",
+      "mirror_equal": true
+    },
+    {
+      "path": "quiz.json",
+      "blob_sha": "5553ec1cb98db0bec9e6f78f548830f0014bb635",
+      "mirror_equal": true
+    }
+  ],
+  "verification": {
+    "method": "GitHub REST recursive tree + fetch_file original/mirror content and blob SHA equality",
+    "verified_at": "2026-11-11",
+    "official_file_count": 4,
+    "all_four_blob_shas_equal": true,
+    "all_four_contents_equal": true,
+    "python_blocks_copied": 6,
+    "all_original_python_blocks_identical_in_chinese_lecture": true,
+    "quiz_total_questions": 5,
+    "post_quiz_questions": 3,
+    "quiz_chinese_stage_options_correct_indices_identical": true,
+    "notebook_json_parse_valid": true
+  },
+  "chinese_lecture": {
+    "path": "docs/zh.md",
+    "translation_basis": "docs/en.md",
+    "independent_review": true,
+    "upstream_translation_reference": "rohitg00/ai-engineering-from-scratch translations:i18n/zh/phases/01-math-foundations/09-information-theory/docs/zh.md",
+    "upstream_direct_copy": false,
+    "notes": "Full Chinese technical translation and annotations; 6 Python code blocks exact matches; Mermaid diagram retained; math/log-base and benchmarking caveats audited"
+  },
+  "learner_files": [
+    "docs/zh.md",
+    "quiz.zh.json",
+    "outputs/skill-information-theory.zh.md",
+    "code/learn.ipynb",
+    "README.md",
+    "source-manifest.json"
+  ],
+  "completion_status": "in_progress"
+}
