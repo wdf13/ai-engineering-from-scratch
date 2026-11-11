@@ -34,10 +34,10 @@
 - [x] Build It：Rosenbrock 数值优化器与收敛轨迹
 - [x] 官方 Exercises 1-4：代码、结果和相关概念检查
 - [x] Use It 部分：PyTorch SGD/AdamW/CosineAnnealingLR 调用已能运行
-- [ ] Learning Rate Schedules：Step Decay、Cosine 数学推导、Warmup + Decay 的完整理解与实践
+- [x] Learning Rate Schedules：Step Decay、Cosine 与 Warmup + Decay 公式及实际步数；学生完成 warmup=1000/cosine=9000、T_max 调用单位与错误里程碑理解题，并完成 PyTorch 验证（2026-11-10）
 - [x] Convex vs Non-convex：严格定义、局部/全局最优、适用条件；学生用 g(x)=(x²-1)² 的 Jensen 反例和二阶导数证明并通过理解检查（2026-11-10）
 - [x] Loss Landscape：已生成 Rosenbrock 的真实二维等高线图；学习高维二维切片定义与局限，学生通过谷底线梯度、Hessian 条件数及 GD 误差收缩理解检查（2026-11-10）
-- [ ] AdamW 解耦权重衰减：与 Adam/L2 惩罚的差异及数值例子
+- [x] AdamW 解耦权重衰减：与耦合 L2/Adam 的矩估计区别、实际数值实验；学生完成衰减比例、分组与双矩影响理解检查（2026-11-11）
 - [x] Use It 延伸：参数组、梯度裁剪及训练步级调度频率；学生通过 weight_decay=0 与 global-norm clipping 理解检查，PyTorch 2.10.0 CPU 实际验证（2026-11-11）
 - [ ] Ship It：官方 outputs/prompt-optimizer-guide.md 对应的实操交付
 - [ ] Post Quiz：官方 quiz.json 中全部 stage=post 问题逐题作答与评分
